@@ -64,6 +64,35 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Content\Nez\effects\Bevels.mgfxo" />
+    <None Include="Content\Nez\effects\BloomCombine.mgfxo" />
+    <None Include="Content\Nez\effects\BloomExtract.mgfxo" />
+    <None Include="Content\Nez\effects\Crosshatch.mgfxo" />
+    <None Include="Content\Nez\effects\DeferredLighting.mgfxo" />
+    <None Include="Content\Nez\effects\DeferredSprite.mgfxo" />
+    <None Include="Content\Nez\effects\Dots.mgfxo" />
+    <None Include="Content\Nez\effects\GaussianBlur.mgfxo" />
+    <None Include="Content\Nez\effects\Grayscale.mgfxo" />
+    <None Include="Content\Nez\effects\HeatDistortion.mgfxo" />
+    <None Include="Content\Nez\effects\Invert.mgfxo" />
+    <None Include="Content\Nez\effects\MultiTexture.mgfxo" />
+    <None Include="Content\Nez\effects\MultiTextureOverlay.mgfxo" />
+    <None Include="Content\Nez\effects\Noise.mgfxo" />
+    <None Include="Content\Nez\effects\PixelGlitch.mgfxo" />
+    <None Include="Content\Nez\effects\Scanlines.mgfxo" />
+    <None Include="Content\Nez\effects\SpriteAlphaTest.mgfxo" />
+    <None Include="Content\Nez\effects\SpriteBlinkEffect.mgfxo" />
+    <None Include="Content\Nez\effects\SpriteEffect.mgfxo" />
+    <None Include="Content\Nez\effects\SpriteLightMultiply.mgfxo" />
+    <None Include="Content\Nez\effects\SpriteLines.mgfxo" />
+    <None Include="Content\Nez\effects\transitions\Squares.mgfxo" />
+    <None Include="Content\Nez\effects\transitions\Wind.mgfxo" />
+    <None Include="Content\Nez\effects\Twist.mgfxo" />
+    <None Include="Content\Nez\effects\Vignette.mgfxo" />
+    <None Include="Content\Nez\NezDefaultBMFont.xnb" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
