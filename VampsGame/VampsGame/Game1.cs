@@ -1,21 +1,24 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Nez;
 
 namespace VampsGame
 {
 	/// <summary>
 	/// This is the main type for your game.
 	/// </summary>
-	public class Game1 : Game
+	public class Game1 : Core
 	{
-		GraphicsDeviceManager graphics;
-		SpriteBatch spriteBatch;
+		//GraphicsDeviceManager graphics;
+		//SpriteBatch spriteBatch;
 
-		public Game1()
+		public Game1() : base( width: 1920, height: 1440, isFullScreen: false, enableEntitySystems: false )
 		{
-			graphics = new GraphicsDeviceManager(this);
-			Content.RootDirectory = "Content";
+
+			Window.ClientSizeChanged += Core.onClientSizeChanged;
+			//graphics = new GraphicsDeviceManager(this);
+			//Content.RootDirectory = "Content";
 		}
 
 		/// <summary>
@@ -29,6 +32,13 @@ namespace VampsGame
 			// TODO: Add your initialization logic here
 
 			base.Initialize();
+			Window.AllowUserResizing = true;
+
+
+			var myScene = Scene.createWithDefaultRenderer(Color.CornflowerBlue);
+
+			// set the scene so Nez can take over
+			scene = myScene;
 		}
 
 		/// <summary>
@@ -38,7 +48,7 @@ namespace VampsGame
 		protected override void LoadContent()
 		{
 			// Create a new SpriteBatch, which can be used to draw textures.
-			spriteBatch = new SpriteBatch(GraphicsDevice);
+			//spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			// TODO: use this.Content to load your game content here
 		}
@@ -73,7 +83,7 @@ namespace VampsGame
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			GraphicsDevice.Clear(Color.CornflowerBlue);
+			//GraphicsDevice.Clear(Color.CornflowerBlue);
 
 			// TODO: Add your drawing code here
 

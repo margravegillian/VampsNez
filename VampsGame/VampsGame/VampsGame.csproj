@@ -64,7 +64,12 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Nez-PCL\Nez.csproj">
+      <Project>{60B7197D-D0D5-405C-90A2-A56903E9B039}</Project>
+      <Name>Nez</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Content\Nez\effects\Bevels.mgfxo" />
     <None Include="Content\Nez\effects\BloomCombine.mgfxo" />
@@ -91,7 +96,9 @@
     <None Include="Content\Nez\effects\transitions\Wind.mgfxo" />
     <None Include="Content\Nez\effects\Twist.mgfxo" />
     <None Include="Content\Nez\effects\Vignette.mgfxo" />
-    <None Include="Content\Nez\NezDefaultBMFont.xnb" />
+    <Content Include="Content\Nez\NezDefaultBMFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
