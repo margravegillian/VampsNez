@@ -153,6 +153,9 @@ namespace Nez
 				return _finalRenderDelegate;
 			}
 		}
+
+		public static object core { get; set; }
+
 		IFinalRenderDelegate _finalRenderDelegate;
 
 		/// <summary>

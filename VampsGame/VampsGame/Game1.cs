@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Nez;
+using Nez.Sprites;
+using VampsGame.Scenes;
 
 namespace VampsGame
 {
@@ -12,6 +14,8 @@ namespace VampsGame
 	{
 		//GraphicsDeviceManager graphics;
 		//SpriteBatch spriteBatch;
+
+		
 
 		public Game1() : base( width: 1920, height: 1440, isFullScreen: false, enableEntitySystems: false )
 		{
@@ -35,10 +39,43 @@ namespace VampsGame
 			Window.AllowUserResizing = true;
 
 
-			var myScene = Scene.createWithDefaultRenderer(Color.CornflowerBlue);
+
+
+			var myScene = Scene.createWithDefaultRenderer(Color.Black);
+
+			var butterfly1Texture = myScene.contentManager.Load<Texture2D>("Textures/butterfly1");
+
+
+			var entityOne = myScene.createEntity("butterfly1");
+			entityOne.addComponent(new Sprite(butterfly1Texture));
+
+			entityOne.transform.position = new Vector2(200, 200);
+			scene = myScene;
+
 
 			// set the scene so Nez can take over
-			scene = myScene;
+			//Scene.createWithDefaultRenderer<ButterScene>();
+
+
+
+			//var myScene = Scene.create<ButterScene>();
+
+			//myScene.initialize();
+			//myScene.initialize();
+
+
+
+			//myScene = new ButterScene();
+			//scene.initialize();
+			//scene = myScene;
+
+
+
+
+			//ButterScene.createWithDefaultRenderer(Color.Black;
+
+			//var scene = new ButterScene();
+
 		}
 
 		/// <summary>
