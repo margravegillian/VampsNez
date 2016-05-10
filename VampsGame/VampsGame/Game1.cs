@@ -12,8 +12,7 @@ namespace VampsGame
 	/// </summary>
 	public class Game1 : Core
 	{
-		//GraphicsDeviceManager graphics;
-		//SpriteBatch spriteBatch;
+		
 
 		
 
@@ -21,8 +20,7 @@ namespace VampsGame
 		{
 
 			Window.ClientSizeChanged += Core.onClientSizeChanged;
-			//graphics = new GraphicsDeviceManager(this);
-			//Content.RootDirectory = "Content";
+			
 		}
 
 		/// <summary>
@@ -39,20 +37,25 @@ namespace VampsGame
 			Window.AllowUserResizing = true;
 
 
+			//do butterscene
+			var butterScene = new ButterScene();
+			butterScene.clearColor = Color.DarkGreen;
+			butterScene.addRenderer(new DefaultRenderer(0, null));
+
+			scene = butterScene;
+
+			//var myScene = Scene.createWithDefaultRenderer(Color.Black);
+
+			//var butterfly1Texture = myScene.contentManager.Load<Texture2D>("Textures/butterfly1");
 
 
-			var myScene = Scene.createWithDefaultRenderer(Color.Black);
-
-			var butterfly1Texture = myScene.contentManager.Load<Texture2D>("Textures/butterfly1");
-
-
-			var entityOne = myScene.createEntity("butterfly1");
-			entityOne.addComponent(new Sprite(butterfly1Texture));
+			//var entityOne = myScene.createEntity("butterfly1");
+			//entityOne.addComponent(new Sprite(butterfly1Texture));
 
 			//add movement simple mover
-			entityOne.addComponent(new SimpleMover());
+			//entityOne.addComponent(new SimpleMover());
 
-			entityOne.transform.position = new Vector2(200, 200);
+			//entityOne.transform.position = new Vector2(200, 200);
 			//scene = myScene;
 
 			//var myScene = ButterScene.createWithDefaultRenderer(Color.Orange);
@@ -60,38 +63,10 @@ namespace VampsGame
 
 
 
-			scene = myScene;
-			
-
-
-
-
-
-
-
-
-			// set the scene so Nez can take over
-			//Scene.createWithDefaultRenderer<ButterScene>();
-
-
-
-			//var myScene = Scene.create<ButterScene>();
-
-			//myScene.initialize();
-			//myScene.initialize();
-
-
-
-			//myScene = new ButterScene();
-			//scene.initialize();
 			//scene = myScene;
+						
 
-
-
-
-			//ButterScene.createWithDefaultRenderer(Color.Black;
-
-			//var scene = new ButterScene();
+					
 
 		}
 

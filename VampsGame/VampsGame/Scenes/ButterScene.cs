@@ -18,11 +18,11 @@ namespace VampsGame.Scenes
 
 
 				public ButterScene()
-		{
+				{
 			
 			
 
-		}
+				}
 
 		
 		public override void initialize()
