@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VampsGame", "VampsGame\VampsGame.csproj", "{4305A99B-310D-47A0-9978-733CABCEC8C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nez", "Nez-PCL\Nez.csproj", "{60B7197D-D0D5-405C-90A2-A56903E9B039}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nez", "Nez\Nez-PCL\Nez.csproj", "{60B7197D-D0D5-405C-90A2-A56903E9B039}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nez.PipelineImporter", "Nez.PipelineImporter\Nez.PipelineImporter.csproj", "{63E831F4-B847-4150-B5AF-CBE059EE27B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nez.PipelineImporter", "Nez\Nez.PipelineImporter\Nez.PipelineImporter.csproj", "{63E831F4-B847-4150-B5AF-CBE059EE27B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

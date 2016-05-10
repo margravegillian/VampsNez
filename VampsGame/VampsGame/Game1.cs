@@ -49,8 +49,25 @@ namespace VampsGame
 			var entityOne = myScene.createEntity("butterfly1");
 			entityOne.addComponent(new Sprite(butterfly1Texture));
 
+			//add movement simple mover
+			entityOne.addComponent(new SimpleMover());
+
 			entityOne.transform.position = new Vector2(200, 200);
+			//scene = myScene;
+
+			//var myScene = ButterScene.createWithDefaultRenderer(Color.Orange);
+			//var myScene = scene.createWithDefaultRenderer<ButterScene>(Color.Orange);
+
+
+
 			scene = myScene;
+			
+
+
+
+
+
+
 
 
 			// set the scene so Nez can take over

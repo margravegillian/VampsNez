@@ -17,11 +17,11 @@ namespace VampsGame.Scenes
 	{
 
 
-		Scene myScene;
-		public ButterScene()
+				public ButterScene()
 		{
-
 			
+			
+
 		}
 
 		
@@ -29,20 +29,24 @@ namespace VampsGame.Scenes
 		{
 			base.initialize();
 
-			
-			 myScene = Scene.createWithDefaultRenderer(Color.CornflowerBlue);
-
-			var butterfly1Texture = myScene.contentManager.Load<Texture2D>("Textures/butterfly1");
 
 
-			var entityOne = myScene.createEntity("butterfly1");
+
+
+
+
+			//var myScene = Scene.createWithDefaultRenderer(Color.Black);
+			var butterfly1Texture = contentManager.Load<Texture2D>("Textures/butterfly1");
+
+
+			var entityOne = createEntity("butterfly1");
 			entityOne.addComponent(new Sprite(butterfly1Texture));
 
-			entityOne.transform.position = new Vector2(200, 200);
+			//add movement simple mover
+			entityOne.addComponent(new SimpleMover());
 
-			
-			// set the scene so Nez can take over
-			// = myScene;
+			entityOne.transform.position = new Vector2(200, 200);
+			//scene = myScene;
 
 		}
 	}
