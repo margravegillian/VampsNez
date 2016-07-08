@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace testgame
+namespace vampsgame
 {
 	// first off, we subclass Component. We want to get update calls every frame so we add the IUpdatable interface
 	// (which just consists of the update method).

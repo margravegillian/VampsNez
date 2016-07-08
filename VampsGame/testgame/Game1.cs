@@ -3,9 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Nez;
 using Nez.Sprites;
-using testgame.Scenes;
+using vampsgame.Scenes;
 
-namespace testgame
+namespace vampsgame
+
 {
 	/// <summary>
 	/// This is the main type for your game.

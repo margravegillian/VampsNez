@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testgame", "testgame\testgame.csproj", "{A9F33286-69D7-430C-A131-D9C15D68F714}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vampsgame", "testgame\vampsgame.csproj", "{A9F33286-69D7-430C-A131-D9C15D68F714}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nez", "Nez-PCL\Nez.csproj", "{60B7197D-D0D5-405C-90A2-A56903E9B039}"
 EndProject

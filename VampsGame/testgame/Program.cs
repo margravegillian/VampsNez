@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace testgame
+namespace vampsgame
 {
     /// <summary>
     /// The main class.

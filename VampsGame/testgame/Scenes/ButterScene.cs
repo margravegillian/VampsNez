@@ -8,10 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using testgame.Scenes;
+using vampsgame.Scenes;
 using static Nez.Scene;
 
-namespace testgame.Scenes
+namespace vampsgame.Scenes
 {
 	public class ButterScene : Scene
 	{
