@@ -13,21 +13,21 @@ namespace vampsgame
 	// (which just consists of the update method).
 	public class SimpleMover : Component, IUpdatable
 	{
-		public float speed = 100f;
+		public float speed = 200f;
 
 		public void update()
 		{
 			var moveDir = Vector2.Zero;
 
 			// Input provides access to the keyboard here. We check for the left/right/up/down arrow keys and set the movement direction accordingly.
-			if (Input.isKeyDown(Keys.Left))
+			if (Input.isKeyDown(Keys.Left ) || Input.isKeyDown(Keys.A)) 
 				moveDir.X = -1f;
-			else if (Input.isKeyDown(Keys.Right))
+			else if (Input.isKeyDown(Keys.Right)|| Input.isKeyDown(Keys.D))
 				moveDir.X = 1f;
 
-			if (Input.isKeyDown(Keys.Up))
+			if (Input.isKeyDown(Keys.Up)||Input.isKeyDown(Keys.W))
 				moveDir.Y = -1f;
-			else if (Input.isKeyDown(Keys.Down))
+			else if (Input.isKeyDown(Keys.Down)|| Input.isKeyDown(Keys.S))
 				moveDir.Y = 1f;
 
 			// every Entity has a transform property. The transform defines the Entity's physical representation in space (position/rotation/scale).

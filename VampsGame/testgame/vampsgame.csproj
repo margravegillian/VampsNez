@@ -39,6 +39,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Entity\Player.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +65,9 @@
     <Reference Include="Nez, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Nez\Nez-PCL\bin\Debug\Nez.dll</HintPath>
+    </Reference>
+    <Reference Include="Nez.PipelineImporter">
+      <HintPath>..\Nez\Nez.PipelineImporter\bin\Debug\Nez.PipelineImporter.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
