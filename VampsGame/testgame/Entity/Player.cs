@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Nez;
 using Nez.Sprites;
 using System;
 using System.Collections.Generic;
@@ -10,37 +11,44 @@ using System.Threading.Tasks;
 
 namespace testgame.Entity
 {
-	public class Player
+	public class Player : Component,ITriggerListener, IUpdatable
 	{
+		enum Animations
+		{
+			FlyUp,
+			FlyDown,
+			FlyRight,
+			FlyLeft
+		}
 
-		int speed;
-		Vector2 position;
+		Sprite<Animations> _animation;
+		Mover _mover;
+		float _moveSpeed = 100f;
+		Vector2 _projectileVelocity = new Vector2(175);
+		VirtualButton _fireInput;
+		VirtualIntegerAxis _xAxisInput;
+		VirtualIntegerAxis _yAxisInput;
+
+
+		
 		int health;
 		int damage;
 		float shield;
-		Texture texture;
-		Sprite sprite;
 		
-
-		public Player(Texture texture, Vector2 position)
+		public override void onAddedToEntity()
 		{
-			this.texture = texture;
-			this.position = position;
-			this.sprite = sprite;
+			var texture = entity.scene.contentManager.Load<Texture2D>("Textures/butterfly1");
 
+			//todo animations
+			//var subtextures = Subtexture.subtexturesFromAtlas(texture, 16, 16);
+			_mover = entity.addComponent(new Mover());
 
-
-			
-
-
-
-
-
-
-
-
+			//
 
 		}
+		
+
+		
 
 
 	}

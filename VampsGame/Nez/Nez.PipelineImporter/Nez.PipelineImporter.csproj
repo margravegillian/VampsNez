@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -35,6 +35,10 @@
     <Reference Include="MonoGame.Framework.Content.Pipeline">
       <HintPath>..\packages\MonoGame.Framework.Content.Pipeline.Portable.3.2.99.1-Beta\lib\portable-net45+win+wpa81+Xamarin.iOS10+MonoAndroid10+MonoTouch10\MonoGame.Framework.Content.Pipeline.dll</HintPath>
     </Reference>
+    <Reference Include="Nez, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Nez-PCL\bin\Debug\Nez.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Serialization" />
     <Reference Include="Ionic.ZLib">
       <HintPath>..\packages\MarkerMetro.Unity.Ionic.Zlib.2.0.0.14\lib\net35\Ionic.ZLib.dll</HintPath>
@@ -49,19 +53,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tiled\" />
-    <Folder Include="BitmapFonts\" />
-    <Folder Include="TexturePacker\" />
-    <Folder Include="TextureAtlasGenerator\" />
-    <Folder Include="XMLTemplateMaker\" />
-    <Folder Include="ParticleDesigner\" />
-    <Folder Include="ParticleDesigner\ConversionTypes\" />
-    <Folder Include="Overlap2D\VOs\NotImplemented\" />
-    <Folder Include="UISkin\" />
-    <Folder Include="Common\" />
-    <Folder Include="NormalMapGenerator\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="Tiled\TiledMapImporter.cs" />
     <Compile Include="Tiled\TiledMapProcessor.cs" />
@@ -162,11 +154,5 @@
     <Compile Include="Common\ContentWriterExt.cs" />
     <Compile Include="NormalMapGenerator\NormalMapProcessor.cs" />
     <Compile Include="Common\PixelBitmapContentExt.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Nez-PCL\Nez.csproj">
-      <Project>{60B7197D-D0D5-405C-90A2-A56903E9B039}</Project>
-      <Name>Nez</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>
