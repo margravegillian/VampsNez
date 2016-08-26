@@ -18,27 +18,27 @@ namespace Nez.Tiled
 		public Color? backgroundColor;
 		public TiledRenderOrder renderOrder;
 		public readonly TiledMapOrientation orientation;
-		public Dictionary<string,string> properties = new Dictionary<string,string>();
-		public List<TiledLayer> layers = new List<TiledLayer>();
-		public List<TiledImageLayer> imageLayers = new List<TiledImageLayer>();
-		public List<TiledTileLayer> tileLayers = new List<TiledTileLayer>();
-		public List<TiledObjectGroup> objectGroups = new List<TiledObjectGroup>();
+		public readonly Dictionary<string, string> properties = new Dictionary<string, string>();
+		public readonly List<TiledLayer> layers = new List<TiledLayer>();
+		public readonly List<TiledImageLayer> imageLayers = new List<TiledImageLayer>();
+		public readonly List<TiledTileLayer> tileLayers = new List<TiledTileLayer>();
+		public readonly List<TiledObjectGroup> objectGroups = new List<TiledObjectGroup>();
+		public readonly List<TiledTileset> tilesets = new List<TiledTileset>();
 
 		public int widthInPixels
 		{
-			get { return width * tileWidth - width; }       
+			get { return width * tileWidth; }
 		}
 
 		public int heightInPixels
 		{
-			get { return height * tileHeight - height; }
+			get { return height * tileHeight; }
 		}
 
-		internal int largestTileWidth;
-		internal int largestTileHeight;
+		public int largestTileWidth;
+		public int largestTileHeight;
 		internal bool requiresLargeTileCulling;
 
-        readonly List<TiledTileset> _tilesets = new List<TiledTileset>();
 		internal List<TiledAnimatedTile> _animatedTiles = new List<TiledAnimatedTile>();
 
 		#endregion
@@ -46,10 +46,10 @@ namespace Nez.Tiled
 
 		public TiledMap(
 			int firstGid,
-			int width, 
-			int height, 
-			int tileWidth, 
-			int tileHeight, 
+			int width,
+			int height,
+			int tileWidth,
+			int tileHeight,
 			TiledMapOrientation orientation = TiledMapOrientation.Orthogonal )
 		{
 			this.firstGid = firstGid;
@@ -61,6 +61,8 @@ namespace Nez.Tiled
 		}
 
 
+		#region Tileset and Layer creation
+
 		public TiledTileset createTileset( Texture2D texture, int firstId, int tileWidth, int tileHeight, bool isStandardTileset, int spacing = 2, int margin = 2 )
 		{
 			TiledTileset tileset;
@@ -69,15 +71,23 @@ namespace Nez.Tiled
 			else
 				tileset = new TiledImageCollectionTileset( texture, firstId );
 
-            if (tileset.tileWidth > largestTileWidth)
-                largestTileWidth = tileset.tileWidth;
+			if( tileset.tileWidth > largestTileWidth )
+				largestTileWidth = tileset.tileWidth;
 
-            if (tileset.tileHeight > largestTileHeight)
-                largestTileHeight = tileset.tileHeight;
+			if( tileset.tileHeight > largestTileHeight )
+				largestTileHeight = tileset.tileHeight;
 
-            _tilesets.Add( tileset );
+			tilesets.Add( tileset );
 
 			return tileset;
+		}
+
+
+		public TiledTileLayer createTileLayer( string name, int width, int height )
+		{
+			var layer = new TiledTileLayer( this, name, width, height );
+			layers.Add( layer );
+			return layer;
 		}
 
 
@@ -102,6 +112,52 @@ namespace Nez.Tiled
 			var group = new TiledObjectGroup( name, color, visible, opacity );
 			objectGroups.Add( group );
 			return group;
+		}
+
+		#endregion
+
+
+		#region Tileset and Layer getters
+
+		/// <summary>
+		/// gets the TiledTileset for the given tileId
+		/// </summary>
+		/// <returns>The tileset for tile identifier.</returns>
+		/// <param name="tileId">Identifier.</param>
+		public TiledTileset getTilesetForTileId( int tileId )
+		{
+			for( var i = tilesets.Count - 1; i >= 0; i-- )
+			{
+				if( tilesets[i].firstId <= tileId )
+					return tilesets[i];
+			}
+
+			throw new Exception( string.Format( "tileId {0} was not foind in any tileset", tileId ) );
+		}
+
+
+		/// <summary>
+		/// returns the TiledTilesetTile for the given id or null if none exists. TiledTilesetTiles exist only for animated tiles and tiles with
+		/// properties set.
+		/// </summary>
+		/// <returns>The tileset tile.</returns>
+		/// <param name="id">Identifier.</param>
+		public TiledTilesetTile getTilesetTile( int id )
+		{
+			for( var i = tilesets.Count - 1; i >= 0; i-- )
+			{
+				if( tilesets[i].firstId <= id )
+				{
+					for( var j = 0; j < tilesets[i].tiles.Count; j++ )
+					{
+						// id is a gid so we need to subtract the tileset.firstId to get a local id
+						if( tilesets[i].tiles[j].id == id - tilesets[i].firstId )
+							return tilesets[i].tiles[j];
+					}
+				}
+			}
+
+			return null;
 		}
 
 
@@ -139,6 +195,29 @@ namespace Nez.Tiled
 
 
 		/// <summary>
+		/// gets the TiledLayer at the specified index
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns>The Layer.</returns>
+		public TiledLayer getLayer( int index )
+		{
+			return layers[index];
+		}
+
+
+		/// <summary>
+		/// gets the TiledLayer by index
+		/// </summary>
+		/// <returns>The layer.</returns>
+		/// <param name="index">Index.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public T getLayer<T>( int index ) where T : TiledLayer
+		{
+			return (T)getLayer( index );
+		}
+
+
+		/// <summary>
 		/// gets the TiledLayer by name
 		/// </summary>
 		/// <returns>The layer.</returns>
@@ -164,6 +243,8 @@ namespace Nez.Tiled
 			}
 			return null;
 		}
+
+		#endregion
 
 
 		/// <summary>
@@ -196,52 +277,10 @@ namespace Nez.Tiled
 		}
 
 
-		/// <summary>
-		/// gets the TiledTileset for the given tileId
-		/// </summary>
-		/// <returns>The tileset for tile identifier.</returns>
-		/// <param name="id">Identifier.</param>
-		public TiledTileset getTilesetForTileId( int tileId )
-		{
-			for( var i = _tilesets.Count - 1; i >= 0; i-- )
-			{
-				if( _tilesets[i].firstId <= tileId )
-					return _tilesets[i];
-			}
-
-			throw new Exception( string.Format( "tileId {0} was not foind in any tileset", tileId ) );
-		}
-
-
-		/// <summary>
-		/// returns the TiledTilesetTile for the given id or null if none exists. TiledTilesetTiles exist only for animated tiles and tiles with
-		/// properties set.
-		/// </summary>
-		/// <returns>The tileset tile.</returns>
-		/// <param name="id">Identifier.</param>
-		public TiledTilesetTile getTilesetTile( int id )
-		{
-			for( var i = _tilesets.Count - 1; i >= 0; i-- )
-			{
-				if( _tilesets[i].firstId <= id )
-				{
-					for( var j = 0; j < _tilesets[i].tiles.Count; j++ )
-					{
-						// id is a gid so we need to subtract the tileset.firstId to get a local id
-						if( _tilesets[i].tiles[j].id == id - _tilesets[i].firstId )
-							return _tilesets[i].tiles[j];
-					}
-				}
-			}
-
-			return null;
-		}
-
-
 		#region world/local conversion
 
 		/// <summary>
-		/// converts from world to tile position
+		/// converts from world to tile position clamping to the tilemap bounds
 		/// </summary>
 		/// <returns>The to tile position.</returns>
 		/// <param name="pos">Position.</param>
@@ -252,7 +291,7 @@ namespace Nez.Tiled
 
 
 		/// <summary>
-		/// converts from world to tile position
+		/// converts from world to tile position clamping to the tilemap bounds
 		/// </summary>
 		/// <returns>The to tile position x.</returns>
 		/// <param name="x">The x coordinate.</param>
@@ -264,7 +303,7 @@ namespace Nez.Tiled
 
 
 		/// <summary>
-		/// converts from world to tile position
+		/// converts from world to tile position clamping to the tilemap bounds
 		/// </summary>
 		/// <returns>The to tile position y.</returns>
 		/// <param name="y">The y coordinate.</param>
@@ -306,7 +345,7 @@ namespace Nez.Tiled
 		{
 			return y * tileHeight;
 		}
-	
+
 		#endregion
 
 	}

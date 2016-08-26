@@ -10,6 +10,8 @@ namespace Nez.BitmapFonts
 {
 	public class BitmapFont : IFont
 	{
+		float IFont.lineSpacing { get { return lineHeight; } }
+
 		/// <summary>
 		/// Gets or sets the line spacing (the distance from baseline to baseline) of the font.
 		/// </summary>
@@ -51,7 +53,7 @@ namespace Nez.BitmapFonts
 		/// <summary>
 		/// this sucker gets used a lot so we cache it to avoid having to create it every frame
 		/// </summary>
-		Matrix _transformationMatrix = Matrix.Identity;
+		Matrix2D _transformationMatrix = Matrix2D.Identity;
 
 		/// <summary>
 		/// width of a space
@@ -64,6 +66,8 @@ namespace Nez.BitmapFonts
 
 		class CharComparer : IEqualityComparer<char>
 		{
+			static public readonly CharComparer defaultCharComparer = new CharComparer();
+
 			public bool Equals( char x, char y )
 			{
 				return x == y;
@@ -73,8 +77,6 @@ namespace Nez.BitmapFonts
 			{
 				return ( b | ( b << 16 ) );
 			}
-
-			static public readonly CharComparer defaultCharComparer = new CharComparer();
 		}
 
 
@@ -95,7 +97,6 @@ namespace Nez.BitmapFonts
 			var words = text.Split( ' ' );
 			var sb = new StringBuilder();
 			var lineWidth = 0f;
-			var spaceWidth = measureString( " " ).X;
 
 			if( maxLineWidth < spaceWidth )
 				return string.Empty;
@@ -306,16 +307,16 @@ namespace Nez.BitmapFonts
 			var requiresTransformation = flippedHorz || flippedVert || rotation != 0f || scale != Vector2.One;
 			if( requiresTransformation )
 			{
-				Matrix temp;
-				Matrix.CreateTranslation( -origin.X, -origin.Y, 0f, out _transformationMatrix );
-				Matrix.CreateScale( ( flippedHorz ? -scale.X : scale.X ), ( flippedVert ? -scale.Y : scale.Y ), 1f, out temp );
-				Matrix.Multiply( ref _transformationMatrix, ref temp, out _transformationMatrix );
-				Matrix.CreateTranslation( flipAdjustment.X, flipAdjustment.Y, 0, out temp );
-				Matrix.Multiply( ref temp, ref _transformationMatrix, out _transformationMatrix );
-				Matrix.CreateRotationZ( rotation, out temp );
-				Matrix.Multiply( ref _transformationMatrix, ref temp, out _transformationMatrix );
-				Matrix.CreateTranslation( position.X, position.Y, 0f, out temp );
-				Matrix.Multiply( ref _transformationMatrix, ref temp, out _transformationMatrix );
+				Matrix2D temp;
+				Matrix2D.CreateTranslation( -origin.X, -origin.Y, out _transformationMatrix );
+				Matrix2D.CreateScale( ( flippedHorz ? -scale.X : scale.X ), ( flippedVert ? -scale.Y : scale.Y ), out temp );
+				Matrix2D.Multiply( ref _transformationMatrix, ref temp, out _transformationMatrix );
+				Matrix2D.CreateTranslation( flipAdjustment.X, flipAdjustment.Y, out temp );
+				Matrix2D.Multiply( ref temp, ref _transformationMatrix, out _transformationMatrix );
+				Matrix2D.CreateRotationZ( rotation, out temp );
+				Matrix2D.Multiply( ref _transformationMatrix, ref temp, out _transformationMatrix );
+				Matrix2D.CreateTranslation( position.X, position.Y, out temp );
+				Matrix2D.Multiply( ref _transformationMatrix, ref temp, out _transformationMatrix );
 			}
 
 			BitmapFontRegion currentFontRegion = null;
@@ -354,7 +355,7 @@ namespace Nez.BitmapFonts
 
 				// transform our point if we need to
 				if( requiresTransformation )
-					Vector2.Transform( ref p, ref _transformationMatrix, out p );
+					Vector2Ext.Transform( ref p, ref _transformationMatrix, out p );
 
 				var destRect = RectangleExt.fromFloats
 				(
@@ -369,7 +370,7 @@ namespace Nez.BitmapFonts
 
 
 		/// <summary>
-		/// old SpriteBatch drawing method. This should probably be removed since SpriteBatch
+		/// old SpriteBatch drawing method. This should probably be removed since SpriteBatch was replaced by Batcher
 		/// </summary>
 		/// <param name="spriteBatch">Sprite batch.</param>
 		/// <param name="text">Text.</param>
@@ -410,16 +411,16 @@ namespace Nez.BitmapFonts
 			var requiresTransformation = flippedHorz || flippedVert || rotation != 0f || scale != Vector2.One;
 			if( requiresTransformation )
 			{
-				Matrix temp;
-				Matrix.CreateTranslation( -origin.X, -origin.Y, 0f, out _transformationMatrix );
-				Matrix.CreateScale( ( flippedHorz ? -scale.X : scale.X ), ( flippedVert ? -scale.Y : scale.Y ), 1f, out temp );
-				Matrix.Multiply( ref _transformationMatrix, ref temp, out _transformationMatrix );
-				Matrix.CreateTranslation( flipAdjustment.X, flipAdjustment.Y, 0, out temp );
-				Matrix.Multiply( ref temp, ref _transformationMatrix, out _transformationMatrix );
-				Matrix.CreateRotationZ( rotation, out temp );
-				Matrix.Multiply( ref _transformationMatrix, ref temp, out _transformationMatrix );
-				Matrix.CreateTranslation( position.X, position.Y, 0f, out temp );
-				Matrix.Multiply( ref _transformationMatrix, ref temp, out _transformationMatrix );
+				Matrix2D temp;
+				Matrix2D.CreateTranslation( -origin.X, -origin.Y, out _transformationMatrix );
+				Matrix2D.CreateScale( ( flippedHorz ? -scale.X : scale.X ), ( flippedVert ? -scale.Y : scale.Y ), out temp );
+				Matrix2D.Multiply( ref _transformationMatrix, ref temp, out _transformationMatrix );
+				Matrix2D.CreateTranslation( flipAdjustment.X, flipAdjustment.Y, out temp );
+				Matrix2D.Multiply( ref temp, ref _transformationMatrix, out _transformationMatrix );
+				Matrix2D.CreateRotationZ( rotation, out temp );
+				Matrix2D.Multiply( ref _transformationMatrix, ref temp, out _transformationMatrix );
+				Matrix2D.CreateTranslation( position.X, position.Y, out temp );
+				Matrix2D.Multiply( ref _transformationMatrix, ref temp, out _transformationMatrix );
 			}
 
 			BitmapFontRegion currentFontRegion = null;
@@ -458,14 +459,14 @@ namespace Nez.BitmapFonts
 
 				// transform our point if we need to
 				if( requiresTransformation )
-					Vector2.Transform( ref p, ref _transformationMatrix, out p );
+					Vector2Ext.Transform( ref p, ref _transformationMatrix, out p );
 
 				var destRect = RectangleExt.fromFloats
-					(
-						p.X, p.Y, 
-						currentFontRegion.width * scale.X,
-						currentFontRegion.height * scale.Y
-					);
+				(
+					p.X, p.Y, 
+					currentFontRegion.width * scale.X,
+					currentFontRegion.height * scale.Y
+				);
 
 				spriteBatch.Draw( currentFontRegion.subtexture, destRect, currentFontRegion.subtexture.sourceRect, color, rotation, Vector2.Zero, effect, depth );
 			}

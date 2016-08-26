@@ -105,7 +105,6 @@
     <Compile Include="ECS\Components\Text\Text.cs" />
     <Compile Include="ECS\InternalUtils\ComponentList.cs" />
     <Compile Include="ECS\InternalUtils\EntityList.cs" />
-    <Compile Include="ECS\InternalUtils\EntityTagLists.cs" />
     <Compile Include="ECS\InternalUtils\RenderableComponentList.cs" />
     <Compile Include="Graphics\Graphics.cs" />
     <Compile Include="Graphics\PrimitiveBatch.cs" />
@@ -434,7 +433,6 @@
     <Compile Include="AI\Pathfinding\AStar\AStarPathfinder.cs" />
     <Compile Include="AI\Pathfinding\BreadthFirst\UnweightedGraph.cs" />
     <Compile Include="AI\Pathfinding\BreadthFirst\UnweightedGridGraph.cs" />
-    <Compile Include="Math\Edge.cs" />
     <Compile Include="Math\Axis.cs" />
     <Compile Include="PipelineRuntime\Tiled\TiledTileExt.cs" />
     <Compile Include="ECS\Components\Physics\TiledMapMover.cs" />
@@ -486,6 +484,16 @@
     <Compile Include="Graphics\Effects\PaletteCyclerEffect.cs" />
     <Compile Include="Graphics\Materials\PaletteCyclerMaterial.cs" />
     <Compile Include="Utils\Extensions\ObjectExt.cs" />
+    <Compile Include="ECS\Components\Text\MarkupText.cs" />
+    <Compile Include="Utils\Enums.cs" />
+    <Compile Include="Utils\Extensions\EdgeExt.cs" />
+    <Compile Include="ECS\Components\Text\TextRunComponent.cs" />
+    <Compile Include="ECS\Components\Text\TextRun.cs" />
+    <Compile Include="Math\Matrix2D.cs" />
+    <Compile Include="Utils\Extensions\SoundEffectInstanceExt.cs" />
+    <Compile Include="Physics\ColliderTriggerHelper.cs" />
+    <Compile Include="ECS\Components\ColorCycler.cs" />
+    <Compile Include="ECS\Components\Renderables\Sprites\PrototypeSprite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

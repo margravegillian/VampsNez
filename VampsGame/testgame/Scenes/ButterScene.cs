@@ -54,5 +54,8 @@ namespace vampsgame.Scenes
 			//scene = myScene;
 
 		}
-	}
+
+
+		
+		}
 }

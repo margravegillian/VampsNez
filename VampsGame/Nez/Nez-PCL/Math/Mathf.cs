@@ -16,9 +16,9 @@ namespace Nez
 		}
 
 
-		public static float floor( float f )
+		public static float ceil( float f )
 		{
-			return (float)Math.Floor( (double)f );
+			return (float)Math.Ceiling( (double)f );
 		}
 
 
@@ -28,15 +28,38 @@ namespace Nez
 		}
 
 
+		/// <summary>
+		/// ceils the float to the nearest int value above y. note that this only works for values in the range of short
+		/// </summary>
+		/// <returns>The ceil to int.</returns>
+		/// <param name="y">F.</param>
+		public static int fastCeilToInt( float y )
+		{
+			return 32768 - (int)( 32768f - y );
+		}
+
+
+		public static float floor( float f )
+		{
+			return (float)Math.Floor( (double)f );
+		}
+
+
 		public static int floorToInt( float f )
 		{
 			return (int)Math.Floor( (double)f );
 		}
 
 
+		/// <summary>
+		/// floors the float to the nearest int value below x. note that this only works for values in the range of short
+		/// </summary>
+		/// <returns>The floor to int.</returns>
+		/// <param name="x">The x coordinate.</param>
 		public static int fastFloorToInt( float x )
 		{
-			return x > 0 ? (int)x : (int)x - 1;
+			// we shift to guaranteed positive before casting then shift back after
+			return (int)( x + 32768f ) - 32768;
 		}
 
 

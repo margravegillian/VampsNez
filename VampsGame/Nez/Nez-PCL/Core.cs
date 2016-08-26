@@ -44,7 +44,10 @@ namespace Nez
 		/// <summary>
 		/// global content manager for loading any assets that should stick around between scenes
 		/// </summary>
-		public static NezContentManager contentManager;
+		public static NezContentManager content;
+
+		[Obsolete( "use Core.content instead of Core.contentManager" )]
+		public static NezContentManager contentManager { get { return content; } }
 
 		/// <summary>
 		/// default SamplerState used by Materials. Note that this must be set at launch! Changing it after that time will result in only
@@ -94,7 +97,7 @@ namespace Nez
 		}
 
 
-		public Core( int width = 1280, int height = 720, bool isFullScreen = false, bool enableEntitySystems = true, string windowTitle = "Nez" )
+		public Core( int width = 1280, int height = 720, bool isFullScreen = false, bool enableEntitySystems = true, string windowTitle = "Nez", string contentDirectory = "Content" )
 		{
 			#if DEBUG
 			_windowTitle = windowTitle;
@@ -115,8 +118,8 @@ namespace Nez
 			Window.ClientSizeChanged += onGraphicsDeviceReset;
 			Window.OrientationChanged += onOrientationChanged;
 
-			Content.RootDirectory = "Content";
-			contentManager = new NezGlobalContentManager( Services, Content.RootDirectory );
+			Content.RootDirectory = contentDirectory;
+			content = new NezGlobalContentManager( Services, Content.RootDirectory );
 			IsMouseVisible = true;
 			IsFixedTimeStep = false;
 
@@ -182,7 +185,7 @@ namespace Nez
 
 			// prep the default Graphics system
 			graphicsDevice = GraphicsDevice;
-			var font = contentManager.Load<BitmapFont>( "nez://Nez.Content.NezDefaultBMFont.xnb" );
+			var font = content.Load<BitmapFont>( "nez://Nez.Content.NezDefaultBMFont.xnb" );
 			Graphics.instance = new Graphics( font );
 		}
 
@@ -207,7 +210,7 @@ namespace Nez
 			for( var i = _globalManagers.length - 1; i >= 0; i-- )
 				_globalManagers.buffer[i].update();
 
-			if( exitOnEscapeKeypress && Input.isKeyDown( Keys.Escape ) || Input.gamePads[0].isButtonReleased( Buttons.Back ) )
+			if( exitOnEscapeKeypress && ( Input.isKeyDown( Keys.Escape ) || Input.gamePads[0].isButtonReleased( Buttons.Back ) ) )
 			{
 				Exit();
 				return;
@@ -231,6 +234,13 @@ namespace Nez
 			#if DEBUG
 			TimeRuler.instance.endMark( "update" );
 			DebugConsole.instance.update();
+			drawCalls = 0;
+			#endif
+
+			#if FNA
+			// MonoGame only updates old-school XNA Components in Update which we dont care about. FNA's core FrameworkDispatcher needs
+			// Update called though so we do so here.
+			FrameworkDispatcher.Update();
 			#endif
 		}
 
@@ -279,13 +289,13 @@ namespace Nez
 				if( _scene != null && _sceneTransition.wantsPreviousSceneRender && !_sceneTransition.hasPreviousSceneRender )
 				{
 					_scene.postRender( _sceneTransition.previousSceneRender );
-					scene = null;
+					if( _sceneTransition._loadsNewScene )
+						scene = null;
 					startCoroutine( _sceneTransition.onBeginTransition() );
 				}
-				else
+				else if( _scene != null )
 				{
-					if( _scene != null )
-						_scene.postRender();
+					_scene.postRender();
 				}
 
 				_sceneTransition.render( Graphics.instance );
@@ -323,10 +333,11 @@ namespace Nez
 		/// temporarily runs SceneTransition allowing one Scene to transition to another smoothly with custom effects.
 		/// </summary>
 		/// <param name="sceneTransition">Scene transition.</param>
-		public static void startSceneTransition( SceneTransition sceneTransition )
+		public static SceneTransition startSceneTransition( SceneTransition sceneTransition )
 		{
 			Assert.isNull( _instance._sceneTransition, "You cannot start a new SceneTransition until the previous one has completed" );
 			_instance._sceneTransition = sceneTransition;
+			return sceneTransition;
 		}
 
 
