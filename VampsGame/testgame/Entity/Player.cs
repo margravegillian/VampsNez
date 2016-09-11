@@ -32,10 +32,18 @@ namespace testgame.Entity
 		int health;
 		int damage;
 		float shield;
-		
+		public Player(int health,float shield, int damage)
+			{
+			this.health = health;
+			this.damage = damage;
+			this.shield = shield;
+
+
+			}
 		public override void onAddedToEntity()
 		{
-			var texture = entity.scene.contentManager.Load<Texture2D>("Textures/butterfly1");
+			var texture = entity.scene.content.Load<Texture2D>("Textures/butterfly1");
+			var sprite = new Sprite(texture);
 
 			//todo animations
 			//var subtextures = Subtexture.subtexturesFromAtlas(texture, 16, 16);

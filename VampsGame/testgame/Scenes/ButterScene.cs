@@ -32,28 +32,41 @@ namespace vampsgame.Scenes
 			base.initialize();
 
 
-			
+
 
 
 
 
 			//var myScene = Scene.createWithDefaultRenderer(Color.Black);
-			var butterfly1Texture = contentManager.Load<Texture2D>("Textures/butterfly1");
-			//player = new Player(butterfly1Texture, new Vector2(200, 200));
 
 
-				
+
+			var butterfly1Texture = content.Load<Texture2D>("Textures/butterfly1");
+
 
 			var entityOne = createEntity("butterfly1");
+
+
 			entityOne.addComponent(new Sprite(butterfly1Texture));
 
 			//add movement simple mover
 			entityOne.addComponent(new SimpleMover());
+			entityOne.addComponent(new DamageComponent());
 
 			entityOne.transform.position = new Vector2(200, 200);
+
+
+
+
+			//player = new Player(100, 50, 5);
+			//var entityOne = createEntity("PlayerOne");
+			//entityOne.addComponent(player);
+
+
+
 			//scene = myScene;
 
-		}
+			}
 
 
 		

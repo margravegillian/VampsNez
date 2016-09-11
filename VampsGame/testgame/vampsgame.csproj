@@ -39,6 +39,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DamageComponent.cs" />
     <Compile Include="Entity\Player.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
